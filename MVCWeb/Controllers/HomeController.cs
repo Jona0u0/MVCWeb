@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,7 +11,12 @@ namespace MVCWeb.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            List<Models.Product> result = new List<Models.Product>();
+            using(Models.AdventureWorks2019Entities db = new Models.AdventureWorks2019Entities()) 
+            {
+                result = (from s in db.Product select s).ToList();
+                return View(result);
+            }
         }
 
         public ActionResult About()
